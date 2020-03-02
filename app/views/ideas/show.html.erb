@@ -1,32 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @idea.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @idea.description %>
-</p>
-
-<p>
-  <strong>Picture:</strong>
-  <%= image_tag(@idea.picture_url, width: 300) if @idea.picture.present? %>
-</p>
-
-<p>
-  <h3>Comments</h3>
-  <% @comments.each do |comment| %>
-    <div>
-      <strong><%= comment.user_name %></strong>
-      <br>
-      <p><%= comment.body %></p>
-      <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
-      <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
-    </div>
-  <% end %>
-  <%= render partial: 'comments/form', locals: { comment: @comment } %>
-</p>
-<%= link_to 'Edit', edit_idea_path(@idea) %> |
-<%= link_to 'Back', ideas_path %>
+<div class="row">
+  <div class="col-md-6">
+    <%= image_tag(@idea.picture_url, width: '300px') if @idea.picture.present? %>
+    <p><b>Name: </b><%= @idea.name %></p>
+    <p><b>Description: </b><%= @idea.description %></p>
+    <p>
+      <%= link_to 'Edit', edit_idea_path(@idea) %> |
+      <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
+      <%= link_to 'Back', ideas_path %>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h3>Comments</h3>
+    <p>
+      <% @comments.each do |comment| %>
+        <div>
+          <strong><%= comment.user_name %></strong>
+          <br>
+          <p><%= comment.body %></p>
+          <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+          <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+        </div>
+      <% end %>
+      <%= render partial: 'comments/form', locals: { comment: @comment } %>
+    </p>
+  </div>
+</div>
