@@ -23,6 +23,7 @@
       <br>
       <p><%= comment.body %></p>
       <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+      <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
     </div>
   <% end %>
   <%= render partial: 'comments/form', locals: { comment: @comment } %>
