@@ -7,6 +7,7 @@
         <%= image_tag idea.picture_url(:thumb), width: '100px' if idea.picture.present? %>
         <h4><%= link_to idea.name, idea %></h4>
         <p class='wrap_word'><%= idea.description %></p>
+        <p><b>Idea by: </b><%= idea.user.email %></p>
       </div>
     <% end %>
   </div>

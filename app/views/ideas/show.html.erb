@@ -3,6 +3,7 @@
     <%= image_tag(@idea.picture_url, width: '300px') if @idea.picture.present? %>
     <p><b>Name: </b><%= @idea.name %></p>
     <p class='wrap_word'><b>Description: </b><%= @idea.description %></p>
+    <p><b>Idea by: </b><%= @idea.user.email %></p>
     <p>
       <%= link_to 'Edit', edit_idea_path(@idea) %> |
       <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
@@ -14,7 +15,7 @@
     <p>
       <% @comments.each do |comment| %>
         <div>
-          <strong><%= comment.user_name %></strong>
+          <strong><%= comment.user.email %> commented:</strong>
           <br>
           <p class='wrap_word'><%= comment.body %></p>
           <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
