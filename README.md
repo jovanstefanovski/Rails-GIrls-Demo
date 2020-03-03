@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Whats next.
+- Describe how to add ratings
+- Design and interaction help from frontend.
 
-Things you may want to cover:
 
-* Ruby version
+Add design using HTML & CSS
+- Do not delete unwanted scaffold
+- Validations, and validation error messages style
 
-* System dependencies
+Additional:
+- Associate users with ideas and comments
+- Authorization
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Tips:
+- If database cant be droped due to lack of permisions use rake db:drop:_unsafe
+- After instaling ImageMagic close the terminal and start rails server again
+- Atom plugin - autosave-onchange
