@@ -18,3 +18,7 @@
  th { border-bottom: 1px solid #DDD; }
  body { margin: 0; }
  .wrap_word { overflow-wrap: break-word; }
+ .gravatar {
+   height: 30px;
+   width: auto;
+ }
