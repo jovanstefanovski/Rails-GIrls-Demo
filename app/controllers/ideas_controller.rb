@@ -4,28 +4,33 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
+    authorize Idea
     @ideas = Idea.all
   end
 
   # GET /ideas/1
   # GET /ideas/1.json
   def show
+    authorize @idea
     @comments = @idea.comments.all
     @comment = @idea.comments.build
   end
 
   # GET /ideas/new
   def new
+    authorize Idea
     @idea = Idea.new
   end
 
   # GET /ideas/1/edit
   def edit
+    authorize @idea
   end
 
   # POST /ideas
   # POST /ideas.json
   def create
+    authorize Idea
     @idea = Idea.new(idea_params)
     @idea.user = current_user
 
@@ -43,6 +48,7 @@ class IdeasController < ApplicationController
   # PATCH/PUT /ideas/1
   # PATCH/PUT /ideas/1.json
   def update
+    authorize @idea
     respond_to do |format|
       if @idea.update(idea_params)
         format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -57,6 +63,7 @@ class IdeasController < ApplicationController
   # DELETE /ideas/1
   # DELETE /ideas/1.json
   def destroy
+    authorize @idea
     @idea.destroy
     respond_to do |format|
       format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }

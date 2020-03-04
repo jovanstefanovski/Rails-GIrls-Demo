@@ -5,8 +5,12 @@
     <p class='wrap_word'><b>Description: </b><%= @idea.description %></p>
     <p><b>Idea by: </b><%= @idea.user.email %></p>
     <p>
-      <%= link_to 'Edit', edit_idea_path(@idea) %> |
-      <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
+      <% if policy(@idea).edit? %>
+        <%= link_to 'Edit', edit_idea_path(@idea) %> |
+      <% end %>
+      <% if policy(@idea).destroy? %>
+        <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
+      <% end %>
       <%= link_to 'Back', ideas_path %>
     </p>
   </div>
@@ -18,8 +22,12 @@
           <strong><%= comment.user.email %> commented:</strong>
           <br>
           <p class='wrap_word'><%= comment.body %></p>
-          <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
-          <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+          <% if policy(comment).destroy? %>
+            <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
+          <% if policy(comment).destroy? %>
+            <%= link_to 'Edit', edit_comment_path(comment) %>
+          <% end %>
         </div>
       <% end %>
       <%= render partial: 'comments/form', locals: { comment: @comment } %>
