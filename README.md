@@ -1,16 +1,15 @@
 # README
 
-Add design using HTML & CSS
-- Do not delete unwanted scaffold
-
-Additional:
-- Authorization
+TODO:
+- Comment modifications tutorial, make comments nested, remove index routes
+- Design changes tutorial, Update desigh guide with the new changes, Do not delete unwanted scaffold
 - Validations, and validation error messages style
 
 Tips:
 - If database cant be droped due to lack of permisions use rake db:drop:_unsafe
 - After instaling ImageMagic close the terminal and start rails server again
 - Atom plugin - autosave-onchange
+- Add public folder to gitignore
 
 ### Associate users with ideas and comments
 
