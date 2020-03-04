@@ -50,3 +50,120 @@ Tips:
         <%= form.text_area :user_name, class: "form-control" %>
       </div>
       ```
+
+
+### Authorization
+
+1. In Gemfile under ```gem 'gravtastic'``` add ```gem 'pundit'```
+2. Run ```bundle install``` command
+3. Run ```rails g pundit:install```. This will create a new 'policy' folder, and a new application_policy.rb' file.
+4. Open application_controller.rb and after ```before_action :authenticate_user!``` add ```include Pundit```
+5. Add authorization in controllers:
+* Open ideas_controller.rb
+    - Add ```authorize Idea``` at the beginning of the index, new and create action.
+    - Add ```authorize @idea``` at the beginning of the show, edit, update and destroy action.
+* Open comments_controller.rb
+    - Add ```authorize Comment``` at the beginning of the create action.
+    - Add ```authorize @comment``` at the beginning of the edit, update and destroy action.
+6. Create policies/idea_policy.rb file and add the following code:
+```
+class IdeaPolicy < ApplicationPolicy
+  def index?
+    true
+  end
+
+  def show?
+    true
+  end
+
+  def create?
+    true
+  end
+
+  def new?
+    true
+  end
+
+  def update?
+    can_modify?
+  end
+
+  def edit?
+    can_modify?
+  end
+
+  def destroy?
+    can_modify?
+  end
+
+  def can_modify?
+    user.id == record.user_id
+  end
+end
+```
+7. Create policies/comment_policy.rb and add the following code:
+```
+class CommentPolicy < ApplicationPolicy
+  def create?
+    true
+  end
+
+  def update?
+    can_modify?
+  end
+
+  def edit?
+    can_modify?
+  end
+
+  def destroy?
+    can_modify?
+  end
+
+  def can_modify?
+    user.id == record.user_id
+  end
+end
+```
+7. Handle authorization error.
+Open application_controller.rb and after ```include Pundit``` add the following code:
+```
+rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+private
+
+def user_not_authorized
+  flash[:alert] = "You are not authorized to perform this action."
+  redirect_to(request.referrer || root_path)
+end
+```
+8. Modify idea show view to not show the 'Edit' and 'Destroy' links if the user is not authorized fot those actions.
+    - Open views/ideas/show.html.erb
+    - Replace the following code:
+    ```
+    <%= link_to 'Edit', edit_idea_path(@idea) %> |
+    <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
+    ```
+    With:
+    ```
+    <% if policy(@idea).edit? %>
+      <%= link_to 'Edit', edit_idea_path(@idea) %> |
+    <% end %>
+    <% if policy(@idea).destroy? %>
+      <%= link_to 'Destroy', @idea, data: { confirm: 'Are you sure?' }, method: :delete %> |
+    <% end %>
+    ```
+    - Replace the followin code:
+    ```
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+    <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+    ```
+    With:
+    ```
+    <% if policy(comment).destroy? %>
+      <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <% end %>
+    <% if policy(comment).destroy? %>
+      <%= link_to 'Edit', edit_comment_path(comment) %>
+    <% end %>
+    ```
